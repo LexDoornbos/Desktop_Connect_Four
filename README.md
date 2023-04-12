@@ -7,4 +7,4 @@ Working on stage 4/4 of the project (forgot to make a repo from the start of sta
 
 TODO: 
   - add a check after each player's turn to see if there are four connecting pieces (horizontal / vertical / diagonal)
-  - in case of a win: hightlight the four connecting cells.
+  - in case of a win: highlight the four connecting cells.
