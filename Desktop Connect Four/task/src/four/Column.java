@@ -1,3 +1,8 @@
+/**
+ *  Obsolete file and class
+ *  I was trying out a few things from the theory: constructor, setters and getters, ...
+ *  In the end I didn't have any use for this class
+ */
 package four;
 
 public class Column {
