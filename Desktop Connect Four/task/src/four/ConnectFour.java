@@ -8,7 +8,7 @@ public class ConnectFour extends JFrame {
     final int ROWS = 6;
     final int COLUMNS = 7;
     Character player = 'X'; // Set X as starting player
-
+    boolean winnerFound = false; // flag to keep track of whether there is a winner or not
     JButton[][] gameButtons = new JButton[ROWS][COLUMNS]; // 2-dim array containing the buttons to insert pieces
 
     /**
@@ -36,7 +36,7 @@ public class ConnectFour extends JFrame {
                 JButton button = new JButton(" "); // label button with empty -space-
                 button.setName("Button" + columnLetters[j] + sortRow);
                 button.setBackground(Color.lightGray);
-                button.addActionListener(e -> actionPerformed(button));
+                button.addActionListener(e -> actionPerformed(button)); // on btnClick do what's in actionPerformed method
                 gameButtons[i][j] = button;
                 gamePanel.add(button);
             }
@@ -56,7 +56,10 @@ public class ConnectFour extends JFrame {
      * @param button : clicked button of the gamePanel
      */
     public void actionPerformed(JButton button) {
+        if (!winnerFound) { // check if there is a winner
             addPiece(button);
+            checkWinner();
+        }
     }
 
     /**
@@ -99,6 +102,98 @@ public class ConnectFour extends JFrame {
     }
 
     /**
+     * Function after each turn to check if 4 of the same player symbols connect.
+     * Horizontal, vertical and 2 diagonal checks.
+     * when a winner is determined, highlight the connecting 4 symbols.
+     */
+    public void checkWinner() {
+        // Check for horizontal wins
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLUMNS - 3; j++) {
+                JButton button1 = gameButtons[i][j];
+                JButton button2 = gameButtons[i][j+1];
+                JButton button3 = gameButtons[i][j+2];
+                JButton button4 = gameButtons[i][j+3];
+                if (!button1.getText().equals(" ") &&
+                        button1.getText().equals(button2.getText()) &&
+                        button1.getText().equals(button3.getText()) &&
+                        button1.getText().equals(button4.getText())) {
+                    // Highlight winning cells
+                    button1.setBackground(Color.YELLOW);
+                    button2.setBackground(Color.YELLOW);
+                    button3.setBackground(Color.YELLOW);
+                    button4.setBackground(Color.YELLOW);
+                    winnerFound = true;
+                    return;
+                }
+            }
+        }
+        // Check for vertical wins
+        for (int i = 0; i < ROWS - 3; i++) {
+            for (int j = 0; j < COLUMNS; j++) {
+                JButton button1 = gameButtons[i][j];
+                JButton button2 = gameButtons[i+1][j];
+                JButton button3 = gameButtons[i+2][j];
+                JButton button4 = gameButtons[i+3][j];
+                if (!button1.getText().equals(" ") &&
+                        button1.getText().equals(button2.getText()) &&
+                        button1.getText().equals(button3.getText()) &&
+                        button1.getText().equals(button4.getText())) {
+                    // Highlight winning cells
+                    button1.setBackground(Color.YELLOW);
+                    button2.setBackground(Color.YELLOW);
+                    button3.setBackground(Color.YELLOW);
+                    button4.setBackground(Color.YELLOW);
+                    winnerFound = true;
+                    return;
+                }
+            }
+        }
+        // Check for diagonal wins (left to right)
+        for (int i = 0; i < ROWS - 3; i++) {
+            for (int j = 0; j < COLUMNS - 3; j++) {
+                JButton button1 = gameButtons[i][j];
+                JButton button2 = gameButtons[i+1][j+1];
+                JButton button3 = gameButtons[i+2][j+2];
+                JButton button4 = gameButtons[i+3][j+3];
+                if (!button1.getText().equals(" ") &&
+                        button1.getText().equals(button2.getText()) &&
+                        button1.getText().equals(button3.getText()) &&
+                        button1.getText().equals(button4.getText())) {
+                    // Highlight winning cells
+                    button1.setBackground(Color.YELLOW);
+                    button2.setBackground(Color.YELLOW);
+                    button3.setBackground(Color.YELLOW);
+                    button4.setBackground(Color.YELLOW);
+                    winnerFound = true;
+                    return;
+                }
+            }
+        }
+        // Check for diagonal wins (right to left)
+        for (int i = 0; i < ROWS - 3; i++) {
+            for (int j = 3; j < COLUMNS; j++) {
+                JButton button1 = gameButtons[i][j];
+                JButton button2 = gameButtons[i+1][j-1];
+                JButton button3 = gameButtons[i+2][j-2];
+                JButton button4 = gameButtons[i+3][j-3];
+                if (!button1.getText().equals(" ") &&
+                        button1.getText().equals(button2.getText()) &&
+                        button1.getText().equals(button3.getText()) &&
+                        button1.getText().equals(button4.getText())) {
+                    // Highlight winning cells
+                    button1.setBackground(Color.YELLOW);
+                    button2.setBackground(Color.YELLOW);
+                    button3.setBackground(Color.YELLOW);
+                    button4.setBackground(Color.YELLOW);
+                    winnerFound = true;
+                    return;
+                }
+            }
+        }
+    }
+
+    /**
      * Action performed by ResetButton
      */
     public void resetGame() {
@@ -111,5 +206,6 @@ public class ConnectFour extends JFrame {
             }
         }
         player = 'X';
+        winnerFound = false;
     }
 }
